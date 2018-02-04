@@ -6,7 +6,7 @@ Activité 1
 // - son titre
 // - son URL
 // - son auteur (la personne qui l'a publié)
-var listeLiens = [
+/*var listeLiens = [
     {
         titre: "So Foot",
         url: "http://sofoot.com",
@@ -22,7 +22,8 @@ var listeLiens = [
         url: "http://Wikipedia.org",
         auteur: "annie.zette"
     }
-];
+];*/
+
 
 // Crée et renvoie un élément DOM affichant les données d'un lien
 // Le paramètre lien est un objet JS représentant un lien
@@ -56,12 +57,15 @@ function creerElementLien(lien) {
 }
 
 var contenu = document.getElementById("contenu");
-// Parcours de la liste des liens et ajout d'un élément au DOM pour chaque lien
-listeLiens.forEach(function (lien) {
-    var elementLien = creerElementLien(lien);
-    contenu.appendChild(elementLien);
-});
-
+var listeLiens;
+ajaxGet("https://oc-jswebsrv.herokuapp.com/api/liens",
+                            function(jsonLiens){
+                                listeLiens = JSON.parse(jsonLiens);
+                                listeLiens.forEach(function (lien) {
+                                    var elementLien = creerElementLien(lien);
+                                    contenu.appendChild(elementLien);
+                                });
+                            });
 //Bouton d'affichage du formulaire
 var affichageFormBouton = document.getElementById("ajoutForm");
 
@@ -135,3 +139,5 @@ function ajoutNouveauLien(){
     messageAjout.style.display = "block";
     setTimeout(function(){messageAjout.style.display = "none";}, 2000);
 }
+
+//activité 3
